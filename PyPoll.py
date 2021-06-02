@@ -50,18 +50,50 @@ for candidate_name in candidate_votes:
 # 3. Print the total votes, and candidate Options
 #print(f'{total_votes:,}')
 #print(f'{winning_candidate} is the winner, she had {winning_count:,} ({winning_percentage:.2f}%) total votes.')
+
+candidate_results = (f"{candidate_name}:{vote_percentage:.1f}% ({votes:,})\n")
+#    )
 winning_candidate_summary = (
-    f"-------------------------\n"
+    f"---------------------\n"
     f"Winner: {winning_candidate}\n"
     f"Winning Vote Count: {winning_count:,}\n"
     f"Winning Percentage: {winning_percentage:.1f}%\n"
-    f"-------------------------\n")
-print(winning_candidate_summary)
+    f"---------------------\n")
+
+ 
+#print(winning_candidate_summary)
 # Using the with statement open the file as a text file.
 with open(file_to_save, "w") as txt_file:
-    # Write some data to the file.
-     txt_file.write(f'Counties in the Election\n--------------------------\nArapahoe\nDenver\nJefferson')
-# 2. Write down the names of all the candidates.
+
+    election_results= (
+    f'Election Results \n'
+    f'---------------------\n'
+    f'{total_votes:,}\n'
+    f'---------------------\n')
+    print(election_results)
+    txt_file.write(election_results)
+
+    for candidate_name in candidate_votes:
+    # 2. Retrieve vote count of a candidate.
+        votes = candidate_votes[candidate_name]
+        vote_percentage = float(votes) / float(total_votes) * 100
+        candidate_results = (f"{candidate_name}:{vote_percentage:.1f}% ({votes:,})\n")
+        if votes > winning_count:    
+            winning_candidate = candidate_name 
+            winning_count = votes
+            winning_percentage = vote_percentage
+        print(candidate_results)
+        txt_file.write(candidate_results)
+    
+    winning_candidate_summary = (
+    f"---------------------\n"
+    f"Winner: {winning_candidate}\n"
+    f"Winning Vote Count: {winning_count:,}\n"
+    f"Winning Percentage: {winning_percentage:.1f}%\n"
+    f"---------------------\n")
+    print(winning_candidate_summary)
+    txt_file.write(winning_candidate_summary)
+# 2. Write down the names of     all the candidates.
 
 # 3. Add a vote count for each candidate.
 # 4. Get the total votes for each candidate.
